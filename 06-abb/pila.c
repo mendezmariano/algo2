@@ -1,10 +1,10 @@
 #include "pila.h"
 #include <stdlib.h>
 
-const int TAMANIO_INICIAL = 4;
-const int COEF_AUMENTO = 2;
-const int COEF_REDUCCION = 2;
-const int PROPORCION_REDUCCION = 2;
+#define TAMANIO_INICIAL 4
+#define COEF_AUMENTO 2
+#define COEF_REDUCCION 2
+#define PROPORCION_REDUCCION 2
 
 /* Definición del struct pila proporcionado por la cátedra.
  */
