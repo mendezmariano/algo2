@@ -11,7 +11,7 @@
 /* Se trata de una pila que contiene datos de tipo void*
  * (punteros genéricos).  La pila en sí está definida en el .c.  */
 
-struct pila;  // Definición completa en pila.c.
+//struct pila;  // Definición completa en pila.c.
 typedef struct pila pila_t;
 
 

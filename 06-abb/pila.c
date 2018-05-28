@@ -8,11 +8,11 @@
 
 /* Definición del struct pila proporcionado por la cátedra.
  */
-struct pila {
+typedef struct pila {
     void** datos;
     size_t cantidad;  // Cantidad de elementos almacenados.
     size_t capacidad;  // Capacidad del arreglo 'datos'.
-};
+} pila_t;
 
 
 
