@@ -129,6 +129,13 @@ nodo_t* nodo_buscar_padre(abb_t *arbol, nodo_t* nodo_actual, const char *clave_b
 bool abb_guardar(abb_t *arbol, const char *clave, void *dato){
     nodo_t* padre = nodo_buscar_padre(arbol, arbol->raiz, clave);
     if(!padre){
+        if(arbol->raiz){
+            if(arbol->destruir_dato){
+                arbol->destruir_dato(arbol->raiz->dato);
+            }
+            arbol->raiz->dato = dato;
+            return true;
+        }
         arbol->raiz = nodo_crear(clave, dato);
         if(!arbol->raiz){
             return false;
@@ -140,7 +147,9 @@ bool abb_guardar(abb_t *arbol, const char *clave, void *dato){
     int comparacion = arbol->cmp(clave, padre->clave);
     if(comparacion < 0){
         if(padre->hijo_izq){
-            arbol->destruir_dato(padre->hijo_izq->dato);
+            if(arbol->destruir_dato){
+                arbol->destruir_dato(padre->hijo_izq->dato);
+            }
             padre->hijo_izq->dato = dato;
         } else {
             padre->hijo_izq = nodo_crear(clave, dato);
@@ -151,7 +160,9 @@ bool abb_guardar(abb_t *arbol, const char *clave, void *dato){
         }
     } else {
         if(padre->hijo_der){
-            arbol->destruir_dato(padre->hijo_der->dato);
+            if(arbol->destruir_dato){
+                arbol->destruir_dato(padre->hijo_der->dato);
+            }
             padre->hijo_der->dato = dato;
         } else {
             padre->hijo_der = nodo_crear(clave, dato);
