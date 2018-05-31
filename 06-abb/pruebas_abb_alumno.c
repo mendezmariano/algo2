@@ -1,10 +1,3 @@
-/*
- * prueba_abb.c
- * Pruebas para el tipo de dato abstracto Tabla de abb
- * Copyright: (2011) Margarita Manterola, Maximiliano Curia
- * Licencia: CC-BY-SA 2.5 (ar) ó CC-BY-SA 3.0
- */
-
 #include "abb.h"
 #include "testing.h"
 
@@ -12,17 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>  // For ssize_t in Linux.
-#include <time.h>
-
-int comparacion_entera(int a, int b){
-    if(a == b){
-        return 0;
-    }
-    if(a < b){
-        return -1;
-    }
-    return 1;
-}
+#include <time.h>}
 
 /* ******************************************************************
  *                        PRUEBAS UNITARIAS
@@ -153,35 +136,69 @@ static void prueba_abb_borrar()
     abb_t* abb = abb_crear(strcmp, NULL);
 
     char *clave1 = "perro", *valor1 = "guau";
-    char *clave2 = "gato", *valor2 = "miau";
+    char *clave2 = "pato", *valor2 = "cuack";
     char *clave3 = "vaca", *valor3 = "mu";
+    char *clave4 = "sapo", *valor4 = "croak";
+    char *clave5 = "serpiente", *valor5 = "sssss";
+    char *clave6 = "gato", *valor6 = "miau";
+    char *clave7 = "delfin", *valor7 = "iiiii";
+    char *clave8 = "gusano", *valor8 = " ";
+    char *clave9 = "leon", *valor9 = "groar";
 
-    /* Inserta 3 valores y luego los borra */
+    // Inserta 9 valores y luego los borra
     print_test("Prueba abb insertar clave1", abb_guardar(abb, clave1, valor1));
     print_test("Prueba abb insertar clave2", abb_guardar(abb, clave2, valor2));
     print_test("Prueba abb insertar clave3", abb_guardar(abb, clave3, valor3));
+    print_test("Prueba abb insertar clave4", abb_guardar(abb, clave4, valor4));
+    print_test("Prueba abb insertar clave5", abb_guardar(abb, clave5, valor5));
+    print_test("Prueba abb insertar clave6", abb_guardar(abb, clave6, valor6));
+    print_test("Prueba abb insertar clave7", abb_guardar(abb, clave7, valor7));
+    print_test("Prueba abb insertar clave8", abb_guardar(abb, clave8, valor8));
+    print_test("Prueba abb insertar clave8", abb_guardar(abb, clave9, valor9));
+    print_test("Prueba abb la cantidad de elementos es 8", abb_cantidad(abb) == 9);
 
-    /* Al borrar cada elemento comprueba que ya no está pero los otros sí. */
-    print_test("Prueba abb pertenece clave3, es verdadero", abb_pertenece(abb, clave3));
-    print_test("Prueba abb borrar clave3, es valor3", abb_borrar(abb, clave3) == valor3);
-    print_test("Prueba abb borrar clave3, es NULL", !abb_borrar(abb, clave3));
-    print_test("Prueba abb pertenece clave3, es falso", !abb_pertenece(abb, clave3));
-    print_test("Prueba abb obtener clave3, es NULL", !abb_obtener(abb, clave3));
-    print_test("Prueba abb la cantidad de elementos es 2", abb_cantidad(abb) == 2);
+    // Al borrar cada elemento comprueba que ya no está pero los otros sí.
+    print_test("Prueba abb pertenece hoja_izq, es verdadero", abb_pertenece(abb, clave7));
+    print_test("Prueba abb borrar hoja_izq, es valor de hoja_izq", abb_borrar(abb, clave7) == valor7);
+    print_test("Prueba abb borrar hoja_izq borrada, es NULL", !abb_borrar(abb, clave7));
+    print_test("Prueba abb pertenece hoja_izq borrada, es falso", !abb_pertenece(abb, clave7));
+    print_test("Prueba abb obtener hoja_izq borrada, es NULL", !abb_obtener(abb, clave7));
+    print_test("Prueba abb la cantidad de elementos es 7", abb_cantidad(abb) == 8);
 
-    print_test("Prueba abb pertenece clave1, es verdadero", abb_pertenece(abb, clave1));
-    print_test("Prueba abb borrar clave1, es valor1", abb_borrar(abb, clave1) == valor1);
-    print_test("Prueba abb borrar clave1, es NULL", !abb_borrar(abb, clave3));
-    print_test("Prueba abb pertenece clave1, es falso", !abb_pertenece(abb, clave1));
-    print_test("Prueba abb obtener clave1, es NULL", !abb_obtener(abb, clave1));
-    print_test("Prueba abb la cantidad de elementos es 1", abb_cantidad(abb) == 1);
+    print_test("Prueba abb pertenece hoja_der, es verdadero", abb_pertenece(abb, clave9));
+    print_test("Prueba abb borrar hoja_der, es valor de hoja_der", abb_borrar(abb, clave9) == valor9);
+    print_test("Prueba abb borrar hoja_der borrada, es NULL", !abb_borrar(abb, clave9));
+    print_test("Prueba abb pertenece hoja_der borrada, es falso", !abb_pertenece(abb, clave9));
+    print_test("Prueba abb obtener hoja_der borrada, es NULL", !abb_obtener(abb, clave9));
+    print_test("Prueba abb la cantidad de elementos es 6", abb_cantidad(abb) == 7);
 
-    print_test("Prueba abb pertenece clave2, es verdadero", abb_pertenece(abb, clave2));
-    print_test("Prueba abb borrar clave2, es valor2", abb_borrar(abb, clave2) == valor2);
-    print_test("Prueba abb borrar clave2, es NULL", !abb_borrar(abb, clave3));
-    print_test("Prueba abb pertenece clave2, es falso", !abb_pertenece(abb, clave2));
-    print_test("Prueba abb obtener clave2, es NULL", !abb_obtener(abb, clave2));
-    print_test("Prueba abb la cantidad de elementos es 0", abb_cantidad(abb) == 0);
+    print_test("Prueba abb pertenece nodo_con_un_hijo_izq, es verdadero", abb_pertenece(abb, clave2));
+    print_test("Prueba abb borrar nodo_con_un_hijo_izq, es valor de nodo_con_un_hijo_izq", abb_borrar(abb, clave2) == valor2);
+    print_test("Prueba abb borrar nodo_con_un_hijo_izq borrado, es NULL", !abb_borrar(abb, clave2));
+    print_test("Prueba abb pertenece nodo_con_un_hijo_izq borrado, es falso", !abb_pertenece(abb, clave2));
+    print_test("Prueba abb obtener nodo_con_un_hijo_izq borrado, es NULL", !abb_obtener(abb, clave2));
+    print_test("Prueba abb la cantidad de elementos es 5", abb_cantidad(abb) == 6);
+
+    print_test("Prueba abb pertenece nodo_con_un_hijo_der, es verdadero", abb_pertenece(abb, clave6));
+    print_test("Prueba abb borrar nodo_con_un_hijo_der, es valor de nodo_con_un_hijo_der", abb_borrar(abb, clave6) == valor6);
+    print_test("Prueba abb borrar nodo_con_un_hijo_der borrado, es NULL", !abb_borrar(abb, clave6));
+    print_test("Prueba abb pertenece nodo_con_un_hijo_der borrado, es falso", !abb_pertenece(abb, clave6));
+    print_test("Prueba abb obtener nodo_con_un_hijo_der borrado, es NULL", !abb_obtener(abb, clave6));
+    print_test("Prueba abb la cantidad de elementos es 5", abb_cantidad(abb) == 5);
+
+    print_test("Prueba abb pertenece nodo_con_2_hijos_con_reemplazante_con_1_hijo, es verdadero", abb_pertenece(abb, clave1));
+    print_test("Prueba abb borrar nodo_con_2_hijos_con_reemplazante_con_1_hijo, es valor de nodo_con_2_hijos_con_reemplazante_con_1_hijo", abb_borrar(abb, clave1) == valor1);
+    print_test("Prueba abb borrar nodo_con_2_hijos_con_reemplazante_con_1_hijo borrado, es NULL", !abb_borrar(abb, clave1));
+    print_test("Prueba abb pertenece nodo_con_2_hijos_con_reemplazante_con_1_hijo borrado, es falso", !abb_pertenece(abb, clave1));
+    print_test("Prueba abb obtener nodo_con_2_hijos_con_reemplazante_con_1_hijo borrado, es NULL", !abb_obtener(abb, clave1));
+    print_test("Prueba abb la cantidad de elementos es 5", abb_cantidad(abb) == 4);
+
+    print_test("Prueba abb pertenece nodo_con_2_hijos_con_reemplazante_sin_hijos, es verdadero", abb_pertenece(abb, clave4));
+    print_test("Prueba abb borrar nodo_con_2_hijos_con_reemplazante_sin_hijos, es valor de nodo_con_2_hijos_con_reemplazante_sin_hijos", abb_borrar(abb, clave4) == valor4);
+    print_test("Prueba abb borrar nodo_con_2_hijos_con_reemplazante_sin_hijos borrado, es NULL", !abb_borrar(abb, clave4));
+    print_test("Prueba abb pertenece nodo_con_2_hijos_con_reemplazante_sin_hijos borrado, es falso", !abb_pertenece(abb, clave4));
+    print_test("Prueba abb obtener nodo_con_2_hijos_con_reemplazante_sin_hijos borrado, es NULL", !abb_obtener(abb, clave4));
+    print_test("Prueba abb la cantidad de elementos es 5", abb_cantidad(abb) == 3);
 
     abb_destruir(abb);
 }
@@ -232,16 +249,20 @@ static void prueba_abb_volumen(size_t largo, bool debug)
 
     /* Inserta 'largo' parejas en el abb */
     bool ok = true;
+    int contador_de_nodos;
     for (unsigned i = 0; i < largo; i++) {
         valores[i] = malloc(sizeof(int));
         sprintf(claves[i], "%08d", rand()%10000);
         *valores[i] = i;
+        if(!abb_pertenece(abb, claves[i])){
+            contador_de_nodos++;
+        }
         ok = abb_guardar(abb, claves[i], valores[i]);
         if (!ok) break;
     }
 
     if (debug) print_test("Prueba abb almacenar muchos elementos", ok);
-    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(abb) == largo);
+    if (debug) print_test("Prueba abb la cantidad de elementos es correcta", abb_cantidad(abb) == contador_de_nodos);
 
     /* Verifica que devuelva los valores correctos */
     for (size_t i = 0; i < largo; i++) {
@@ -256,11 +277,12 @@ static void prueba_abb_volumen(size_t largo, bool debug)
 
     /* Verifica que borre y devuelva los valores correctos */
     for (size_t i = 0; i < largo; i++) {
-        ok = abb_borrar(abb, claves[i]) == valores[i];
-        if (!ok) break;
+        if(abb_borrar(abb, claves[i]) == valores[i]){
+            contador_de_nodos--;
+        }
     }
 
-    if (debug) print_test("Prueba abb borrar muchos elementos", ok);
+    if (debug) print_test("Prueba abb borrar muchos elementos", contador_de_nodos == 0);
     if (debug) print_test("Prueba abb la cantidad de elementos es 0", abb_cantidad(abb) == 0);
 
     /* Destruye el abb y crea uno nuevo que sí libera */
@@ -421,7 +443,8 @@ int main()
     prueba_abb_borrar();
     prueba_abb_clave_vacia();
     prueba_abb_valor_null();
-    prueba_abb_volumen(1, true);
+    prueba_abb_volumen(500, true);
+    prueba_abb_volumen(2000, true);
     prueba_abb_iterar();
     prueba_abb_iterar_volumen(1);
 }
