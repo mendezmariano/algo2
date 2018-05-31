@@ -223,8 +223,8 @@ static void prueba_abb_volumen(size_t largo, bool debug)
 {
     abb_t* abb = abb_crear(strcmp, free);
 
-    const size_t largo_clave = 10;
-    char (*claves) [largo_clave] = malloc(largo * largo_clave);
+    const int largo_clave = 10;
+    char (*claves) [10] = malloc(largo * largo_clave);
 
     unsigned* valores[largo];
 
@@ -347,7 +347,7 @@ static void prueba_abb_iterar_volumen(size_t largo)
     abb_t* abb = abb_crear(strcmp, NULL);
 
     const size_t largo_clave = 10;
-    char (*claves)[largo_clave] = malloc(largo * largo_clave);
+    char (*claves)[10] = malloc(largo * largo_clave);
 
     size_t valores[largo];
 

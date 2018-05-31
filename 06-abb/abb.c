@@ -44,15 +44,6 @@ nodo_t* nodo_crear(const char *clave, void *dato){//OK
     return nodo;
 }
 
-void* nodo_destruir(abb_t *arbol, nodo_t* nodo){ //OK
-    void* dato = nodo->dato;
-    if(arbol->destruir_dato){
-        arbol->destruir_dato(nodo->dato);
-    }
-    free(nodo->clave);
-    free(nodo);
-    return dato;
-}
 
 //
 abb_t* abb_crear(abb_comparar_clave_t cmp, abb_destruir_dato_t destruir_dato){  //OK
@@ -65,15 +56,7 @@ abb_t* abb_crear(abb_comparar_clave_t cmp, abb_destruir_dato_t destruir_dato){  
 }
 
 //
-void abb_destruir_recursivo(abb_t *arbol, nodo_t* nodo_actual){//OK
-    if(!nodo_actual){
-        return;
-    }
-    abb_destruir_recursivo(arbol, nodo_actual->hijo_izq);
-    abb_destruir_recursivo(arbol, nodo_actual->hijo_der);
-    nodo_destruir(arbol, nodo_actual);
-    return;
-}
+
 
 //
 nodo_t* nodo_buscar(const abb_t *arbol, nodo_t* nodo_actual, const char *clave_buscada){//OK
@@ -307,13 +290,34 @@ bool abb_pertenece(const abb_t *arbol, const char *clave){
 }
 
 //
-size_t abb_cantidad(abb_t *arbol){
+size_t abb_cantidad(abb_t *arbol){//ok
     return arbol->cantidad;
 }
 
+void* nodo_destruir(abb_t *arbol, nodo_t* nodo){ //OK
+    void* dato = nodo->dato;
+    if(arbol->destruir_dato){
+        arbol->destruir_dato(nodo->dato);
+    }
+    free(nodo->clave);
+    free(nodo);
+    return dato;
+}
+
+void abb_destruir_recursivo(abb_t *arbol, nodo_t* nodo_actual){//OK
+    if(!nodo_actual){
+        return;
+    }
+    abb_destruir_recursivo(arbol, nodo_actual->hijo_izq);
+    abb_destruir_recursivo(arbol, nodo_actual->hijo_der);
+    arbol->destruir_dato(nodo_destruir(arbol, nodo_actual));
+    return;
+}
 //
-void abb_destruir(abb_t *arbol){
+void abb_destruir(abb_t* arbol){ //ok
     abb_destruir_recursivo(arbol, arbol->raiz);
+    free(arbol);
+    arbol = NULL;
 }
 
 //iterador interno
